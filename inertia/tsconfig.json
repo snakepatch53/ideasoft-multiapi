@@ -1,0 +1,24 @@
+{
+    "extends": "@adonisjs/tsconfig/tsconfig.client.json",
+    "compilerOptions": {
+        "baseUrl": ".",
+        "module": "ESNext",
+        "jsx": "react-jsx",
+        "strict": false,
+        "noImplicitAny": false,
+        "noImplicitReturns": false,
+        "noImplicitThis": false,
+        "noUnusedLocals": false,
+        "noUnusedParameters": false,
+        "strictNullChecks": false,
+        "strictFunctionTypes": false,
+        "strictBindCallApply": false,
+        "strictPropertyInitialization": false,
+        "skipLibCheck": true,
+        "paths": {
+            "~/*": ["./*"],
+            "@/*": ["./*"]
+        }
+    },
+    "include": ["./**/*.ts", "./**/*.tsx"]
+}

@@ -1,0 +1,23 @@
+﻿{
+    "extends": "@adonisjs/tsconfig/tsconfig.app.json",
+    "compilerOptions": {
+        "rootDir": "./",
+        "outDir": "./build",
+        "baseUrl": ".",
+        "strict": false,
+        "noImplicitAny": false,
+        "noImplicitReturns": false,
+        "noImplicitThis": false,
+        "noUnusedLocals": false,
+        "noUnusedParameters": false,
+        "strictNullChecks": false,
+        "strictFunctionTypes": false,
+        "strictBindCallApply": false,
+        "strictPropertyInitialization": false,
+        "skipLibCheck": true,
+        "paths": {
+            "@/*": ["./inertia/*"]
+        }
+    },
+    "exclude": ["node_modules", "build"]
+}

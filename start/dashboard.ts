@@ -1,4 +1,5 @@
 import router from '@adonisjs/core/services/router';
+import { middleware } from './kernel.js';
 
 const DashboardController = () => import('#controllers/dashboard_controller');
 
@@ -7,4 +8,5 @@ router
         router.get('/', [DashboardController, 'home']).as('home');
     })
     .prefix('/dashboard')
-    .as('dashboard');
+    .as('dashboard')
+    .middleware([middleware.auth()]);

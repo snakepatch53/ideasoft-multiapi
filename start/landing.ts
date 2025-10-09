@@ -1,19 +1,13 @@
-import { cuid } from '@adonisjs/core/helpers';
 import router from '@adonisjs/core/services/router';
+import { middleware } from './kernel.js';
+const LandingController = () => import('#controllers/landing_controller');
 
-router.on('/').renderInertia('landing/Home').as('landing.home');
+// router.on('/').renderInertia('landing/Home').as('landing.home');
 
 router
-    .post('/upload', async ({ request, response }) => {
-        const file = request.file('file');
-        if (!file) return response.status(400).send('No file uploaded');
-        const image = request.file('file', {
-            size: '2mb',
-            extnames: ['jpeg', 'jpg', 'png'],
-        });
-        if (!image) return response.badRequest({ error: 'Image missing' });
-        const key = `uploads/${cuid()}.${image.extname}`;
-        await image.moveToDisk(key);
-        return response.redirect().back();
+    .group(() => {
+        router.get('/', [LandingController, 'home']).as('home');
     })
-    .as('upload');
+    .middleware([middleware.guest()])
+    .prefix('/')
+    .as('landing');

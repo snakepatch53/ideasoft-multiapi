@@ -6,6 +6,11 @@ import adonisjs from '@adonisjs/vite/client';
 import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
+    server: {
+        host: true, // permite conexiones externas (necesario si estás en un VPS)
+        allowedHosts: ['api.ideasoft.site'], // 👈 agrega tu dominio o subdominio
+        port: 5173, // o el puerto donde estés corriendo Vite
+    },
     plugins: [
         tailwindcss(),
         inertia({ ssr: { enabled: true, entrypoint: 'inertia/app/ssr.tsx' } }),

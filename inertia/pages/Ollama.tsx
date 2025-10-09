@@ -3,17 +3,15 @@ import { useEffect, useRef, useState } from 'react';
 import MarkdownRender from '~/components/MarkdownRender';
 import { cn } from '~/lib/utils';
 
-export default function Ollama({
-    messages,
-    model,
-}: {
-    messages: {
-        role: 'user' | 'assistant';
-        content: string;
-    }[];
-    model: string;
-}) {
-    const { data, setData, post, reset, processing } = useForm({ message: '', model });
+type MessageT = {
+    role: 'user' | 'assistant';
+    content: string;
+};
+
+type ModelT = 'gemma:2b' | 'gemma3' | 'gpt-oss:120b-cloud';
+
+export default function Ollama({ messages, model }: { messages: MessageT[]; model: ModelT }) {
+    const { data, setData, post, reset, processing } = useForm<{ message: string; model: ModelT }>({ message: '', model });
     const lastMsgRef = useRef<HTMLDivElement>(null);
     const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -22,7 +20,8 @@ export default function Ollama({
         lastMsgRef.current.scrollIntoView({ behavior: 'smooth' });
         textAreaRef.current?.focus();
     }, [messages]);
-    console.log(data);
+
+    console.log(data, model);
 
     return (
         <>
@@ -53,12 +52,12 @@ export default function Ollama({
                     >
                         <textarea
                             ref={textAreaRef}
-                            value={data.message || ''}
+                            value={data?.message || ''}
                             onChange={(e) => setData('message', e.target.value)}
                             onKeyDown={(e) => {
                                 if (e.key === 'Enter' && !e.shiftKey) {
                                     e.preventDefault();
-                                    post('/message');
+                                    post('/message', { preserveState: true });
                                     reset();
                                 }
                             }}
@@ -66,7 +65,11 @@ export default function Ollama({
                             placeholder="Type your message here..."
                             disabled={!!processing}
                         />
-                        <select className="border rounded-lg p-2" value={data.model} onChange={(e) => setData('model', e.target.value)}>
+                        <select
+                            className="border rounded-lg p-2"
+                            value={data?.model || model}
+                            onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setData('model', e.target.value as ModelT)}
+                        >
                             <option value="gemma:2b">gemma:2b</option>
                             <option value="gemma3">gemma3</option>
                             <option value="gpt-oss:120b-cloud">gpt-oss:120b-cloud</option>

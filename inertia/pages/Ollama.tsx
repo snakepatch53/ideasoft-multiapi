@@ -8,10 +8,10 @@ type MessageT = {
     content: string;
 };
 
-type ModelT = 'gemma:2b' | 'gemma3' | 'gpt-oss:120b-cloud';
+type ModelT = 'tinyllama' | 'gemma:2b' | 'gemma3' | 'gpt-oss:120b-cloud';
 
 export default function Ollama({ messages }: { messages: MessageT[] }) {
-    const { data, setData, post, reset, processing } = useForm<{ message: string; model: ModelT }>({ message: '', model: 'gemma:2b' });
+    const { data, setData, post, reset, processing } = useForm<{ message: string; model: ModelT }>({ message: '', model: 'tinyllama' });
     const lastMsgRef = useRef<HTMLDivElement>(null);
     const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -68,6 +68,7 @@ export default function Ollama({ messages }: { messages: MessageT[] }) {
                             value={data?.model || ''}
                             onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setData('model', e.target.value as ModelT)}
                         >
+                            <option value="tinyllama">tinyllama</option>
                             <option value="gemma:2b">gemma:2b</option>
                             <option value="gemma3">gemma3</option>
                             <option value="gpt-oss:120b-cloud">gpt-oss:120b-cloud</option>

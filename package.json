@@ -8,6 +8,7 @@
         "start": "node bin/server.js",
         "build": "node ace build",
         "dev": "node ace serve --hmr",
+        "dev:restart": "node dev-restart.js",
         "test": "node ace test",
         "lint": "eslint .",
         "format": "prettier --write .",
@@ -60,6 +61,7 @@
         "@adonisjs/auth": "^9.4.0",
         "@adonisjs/core": "^6.18.0",
         "@adonisjs/cors": "^2.2.1",
+        "@adonisjs/drive": "^3.4.1",
         "@adonisjs/inertia": "^3.1.1",
         "@adonisjs/lucid": "^21.6.1",
         "@adonisjs/session": "^7.5.1",
@@ -67,7 +69,13 @@
         "@adonisjs/static": "^1.1.1",
         "@adonisjs/vite": "^4.0.0",
         "@inertiajs/react": "^2.2.4",
+        "@izzyjs/route": "^2.1.7",
+        "@radix-ui/react-avatar": "^1.1.10",
+        "@radix-ui/react-dialog": "^1.1.15",
+        "@radix-ui/react-dropdown-menu": "^2.1.16",
+        "@radix-ui/react-separator": "^1.1.7",
         "@radix-ui/react-slot": "^1.2.3",
+        "@radix-ui/react-tooltip": "^1.2.8",
         "@vinejs/vine": "^3.0.1",
         "class-variance-authority": "^0.7.1",
         "clsx": "^2.1.1",
@@ -77,6 +85,8 @@
         "luxon": "^3.7.2",
         "mysql2": "^3.15.1",
         "ollama": "^0.6.0",
+        "prettier-plugin-organize-imports": "^4.3.0",
+        "prettier-plugin-tailwindcss": "^0.6.14",
         "react": "^19.1.1",
         "react-dom": "^19.1.1",
         "react-markdown": "^10.1.0",
@@ -84,7 +94,8 @@
         "reflect-metadata": "^0.2.2",
         "rehype-raw": "^7.0.0",
         "remark-gfm": "^4.0.1",
-        "tailwind-merge": "^3.3.1"
+        "tailwind-merge": "^3.3.1",
+        "zustand": "^5.0.8"
     },
     "hotHook": {
         "boundaries": [

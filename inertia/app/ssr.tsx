@@ -1,5 +1,7 @@
-import ReactDOMServer from 'react-dom/server';
 import { createInertiaApp } from '@inertiajs/react';
+import { route } from '@izzyjs/route/client';
+import ReactDOMServer from 'react-dom/server';
+import { RouteT } from '~/types/global';
 
 export default function render(page: any) {
     return createInertiaApp({
@@ -11,6 +13,9 @@ export default function render(page: any) {
             });
             return pages[`../pages/${name}.tsx`];
         },
-        setup: ({ App, props }) => <App {...props} />,
+        setup: ({ App, props }) => {
+            globalThis.route = route as RouteT;
+            return <App {...props} />;
+        },
     });
 }

@@ -1,5 +1,5 @@
-import { Head, router, useForm } from '@inertiajs/react';
-import { useEffect, useRef, useState } from 'react';
+import { Head, useForm } from '@inertiajs/react';
+import { useEffect, useRef } from 'react';
 import MarkdownRender from '~/components/MarkdownRender';
 import { cn } from '~/lib/utils';
 
@@ -24,14 +24,14 @@ export default function Ollama({ messages }: { messages: MessageT[] }) {
     return (
         <>
             <Head title="Ollama Page" />
-            <section className="px-5 py-16 h-screen overflow-hidden flex">
-                <div className="container mx-auto flex flex-col gap-5 ">
+            <section className="flex h-screen overflow-hidden px-5 py-16">
+                <div className="container mx-auto flex flex-col gap-5">
                     <h1>Ollama Chat</h1>
-                    <div className="border rounded-xl p-5 flex-1 overflow-y-auto">
+                    <div className="flex-1 overflow-y-auto rounded-xl border p-5">
                         {messages.map((msg, index) => (
                             <div
                                 key={index}
-                                className={cn('flex flex-col border border-gray-200 p-2 my-2 rounded-xl ml-auto w-fit bg-blue-100', {
+                                className={cn('my-2 ml-auto flex w-fit flex-col rounded-xl border border-gray-200 bg-blue-100 p-2', {
                                     'mr-auto ml-0 bg-gray-200': msg.role === 'assistant',
                                 })}
                             >
@@ -44,8 +44,8 @@ export default function Ollama({ messages }: { messages: MessageT[] }) {
                         <div ref={lastMsgRef} />
                     </div>
                     <label
-                        className={cn('flex border rounded-xl items-start p-2', {
-                            'opacity-50 pointer-events-none': !!processing,
+                        className={cn('flex items-start rounded-xl border p-2', {
+                            'pointer-events-none opacity-50': !!processing,
                         })}
                     >
                         <textarea
@@ -59,12 +59,12 @@ export default function Ollama({ messages }: { messages: MessageT[] }) {
                                     reset('message');
                                 }
                             }}
-                            className="flex-1 outline-none w-full field-sizing-content min-h-12 resize-none"
+                            className="field-sizing-content min-h-12 w-full flex-1 resize-none outline-none"
                             placeholder="Type your message here..."
                             disabled={!!processing}
                         />
                         <select
-                            className="border rounded-lg p-2"
+                            className="rounded-lg border p-2"
                             value={data?.model || ''}
                             onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setData('model', e.target.value as ModelT)}
                         >

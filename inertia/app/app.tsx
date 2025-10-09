@@ -1,10 +1,12 @@
 /// <reference path="../../adonisrc.ts" />
 /// <reference path="../../config/inertia.ts" />
 
-import '../css/app.css';
-import { hydrateRoot } from 'react-dom/client';
-import { createInertiaApp } from '@inertiajs/react';
 import { resolvePageComponent } from '@adonisjs/inertia/helpers';
+import { createInertiaApp } from '@inertiajs/react';
+import { route } from '@izzyjs/route/client';
+import { hydrateRoot } from 'react-dom/client';
+import { RouteT } from '~/types/global';
+import '../css/app.css';
 
 const appName = import.meta.env.VITE_APP_NAME || 'AdonisJS';
 
@@ -18,6 +20,7 @@ createInertiaApp({
     },
 
     setup({ el, App, props }) {
+        globalThis.route = route as RouteT;
         hydrateRoot(el, <App {...props} />);
     },
 });

@@ -12,5 +12,6 @@
     "bracketSameLine": false,
     "singleAttributePerLine": false,
     "experimentalTernaries": false,
-    "noImplicitAny": false
+    "noImplicitAny": false,
+    "plugins": ["prettier-plugin-organize-imports", "prettier-plugin-tailwindcss"]
 }

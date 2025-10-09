@@ -15,13 +15,14 @@
             rel="stylesheet"
         />
 
+        @routes()
         @stack('dumper')
         @viteReactRefresh()
         @inertiaHead()
         @vite(['inertia/app/app.tsx', `inertia/pages/${page.component}.tsx`])
     </head>
 
-    <body class="min-h-screen w-screen font-sans">
+    <body>
         @inertia()
     </body>
 

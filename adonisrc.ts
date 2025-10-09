@@ -2,40 +2,40 @@ import { defineConfig } from '@adonisjs/core/app';
 
 export default defineConfig({
     /*
-  |--------------------------------------------------------------------------
-  | Experimental flags
-  |--------------------------------------------------------------------------
-  |
-  | The following features will be enabled by default in the next major release
-  | of AdonisJS. You can opt into them today to avoid any breaking changes
-  | during upgrade.
-  |
-  */
+|--------------------------------------------------------------------------
+| Experimental flags
+|--------------------------------------------------------------------------
+|
+| The following features will be enabled by default in the next major release
+| of AdonisJS. You can opt into them today to avoid any breaking changes
+| during upgrade.
+|
+*/
     experimental: {
         mergeMultipartFieldsAndFiles: true,
         shutdownInReverseOrder: true,
     },
 
     /*
-  |--------------------------------------------------------------------------
-  | Commands
-  |--------------------------------------------------------------------------
-  |
-  | List of ace commands to register from packages. The application commands
-  | will be scanned automatically from the "./commands" directory.
-  |
-  */
-    commands: [() => import('@adonisjs/core/commands'), () => import('@adonisjs/lucid/commands')],
+|--------------------------------------------------------------------------
+| Commands
+|--------------------------------------------------------------------------
+|
+| List of ace commands to register from packages. The application commands
+| will be scanned automatically from the "./commands" directory.
+|
+*/
+    commands: [() => import('@adonisjs/core/commands'), () => import('@adonisjs/lucid/commands'), () => import('@izzyjs/route/commands')],
 
     /*
-  |--------------------------------------------------------------------------
-  | Service providers
-  |--------------------------------------------------------------------------
-  |
-  | List of service providers to import and register when booting the
-  | application
-  |
-  */
+|--------------------------------------------------------------------------
+| Service providers
+|--------------------------------------------------------------------------
+|
+| List of service providers to import and register when booting the
+| application
+|
+*/
     providers: [
         () => import('@adonisjs/core/providers/app_provider'),
         () => import('@adonisjs/core/providers/hash_provider'),
@@ -53,27 +53,29 @@ export default defineConfig({
         () => import('@adonisjs/lucid/database_provider'),
         () => import('@adonisjs/auth/auth_provider'),
         () => import('@adonisjs/inertia/inertia_provider'),
+        () => import('@adonisjs/drive/drive_provider'),
+        () => import('@izzyjs/route/izzy_provider'),
     ],
 
     /*
-  |--------------------------------------------------------------------------
-  | Preloads
-  |--------------------------------------------------------------------------
-  |
-  | List of modules to import before starting the application.
-  |
-  */
+|--------------------------------------------------------------------------
+| Preloads
+|--------------------------------------------------------------------------
+|
+| List of modules to import before starting the application.
+|
+*/
     preloads: [() => import('#start/routes'), () => import('#start/kernel')],
 
     /*
-  |--------------------------------------------------------------------------
-  | Tests
-  |--------------------------------------------------------------------------
-  |
-  | List of test suites to organize tests by their type. Feel free to remove
-  | and add additional suites.
-  |
-  */
+|--------------------------------------------------------------------------
+| Tests
+|--------------------------------------------------------------------------
+|
+| List of test suites to organize tests by their type. Feel free to remove
+| and add additional suites.
+|
+*/
     tests: {
         suites: [
             {
@@ -91,14 +93,14 @@ export default defineConfig({
     },
 
     /*
-  |--------------------------------------------------------------------------
-  | Metafiles
-  |--------------------------------------------------------------------------
-  |
-  | A collection of files you want to copy to the build folder when creating
-  | the production build.
-  |
-  */
+|--------------------------------------------------------------------------
+| Metafiles
+|--------------------------------------------------------------------------
+|
+| A collection of files you want to copy to the build folder when creating
+| the production build.
+|
+*/
     metaFiles: [
         {
             pattern: 'resources/views/**/*.edge',
@@ -113,5 +115,11 @@ export default defineConfig({
     assetsBundler: false,
     hooks: {
         onBuildStarting: [() => import('@adonisjs/vite/build_hook')],
+        onDevServerStarted: [() => import('@izzyjs/route/dev_hook')],
     },
+
+    // unstable_assembler: {
+    //     onBuildStarting: [() => import('@adonisjs/vite/build_hook')],
+    //     onDevServerStarted: [() => import('@izzyjs/route/dev_hook')], // Add this line,
+    // },
 });

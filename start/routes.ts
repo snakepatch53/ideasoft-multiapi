@@ -17,7 +17,7 @@ router.post('/message', async function ({ request, response }) {
     // const ollamaResponse = await ollama.chat({ model: 'gemma3', messages });
     const ollamaResponse = await ollama.chat({
         model: 'gpt-oss:120b-cloud',
-        messages: [{ role: 'user', content: 'Explain quantum computing' }],
+        messages,
         stream: true,
     });
 

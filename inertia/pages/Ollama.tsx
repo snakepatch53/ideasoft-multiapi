@@ -1,5 +1,6 @@
 import { Head, router, useForm } from '@inertiajs/react';
 import { useState } from 'react';
+import MarkdownRender from '~/components/MarkdownRender';
 import { cn } from '~/lib/utils';
 
 export default function Ollama({
@@ -27,7 +28,9 @@ export default function Ollama({
                                 })}
                             >
                                 <strong>{msg.role}</strong>
-                                <p>{msg.content}</p>
+                                <div>
+                                    <MarkdownRender>{msg.content}</MarkdownRender>
+                                </div>
                             </div>
                         ))}
                     </div>

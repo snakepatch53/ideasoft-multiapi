@@ -10,8 +10,8 @@ type MessageT = {
 
 type ModelT = 'gemma:2b' | 'gemma3' | 'gpt-oss:120b-cloud';
 
-export default function Ollama({ messages, model }: { messages: MessageT[]; model: ModelT }) {
-    const { data, setData, post, reset, processing } = useForm<{ message: string; model: ModelT }>({ message: '', model });
+export default function Ollama({ messages }: { messages: MessageT[] }) {
+    const { data, setData, post, reset, processing } = useForm<{ message: string; model: ModelT }>({ message: '', model: 'gemma:2b' });
     const lastMsgRef = useRef<HTMLDivElement>(null);
     const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -20,8 +20,6 @@ export default function Ollama({ messages, model }: { messages: MessageT[]; mode
         lastMsgRef.current.scrollIntoView({ behavior: 'smooth' });
         textAreaRef.current?.focus();
     }, [messages]);
-
-    console.log(data, model);
 
     return (
         <>
@@ -58,7 +56,7 @@ export default function Ollama({ messages, model }: { messages: MessageT[]; mode
                                 if (e.key === 'Enter' && !e.shiftKey) {
                                     e.preventDefault();
                                     post('/message', { preserveState: true });
-                                    reset();
+                                    reset('message');
                                 }
                             }}
                             className="flex-1 outline-none w-full field-sizing-content min-h-12 resize-none"
@@ -67,7 +65,7 @@ export default function Ollama({ messages, model }: { messages: MessageT[]; mode
                         />
                         <select
                             className="border rounded-lg p-2"
-                            value={data?.model || model}
+                            value={data?.model || ''}
                             onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setData('model', e.target.value as ModelT)}
                         >
                             <option value="gemma:2b">gemma:2b</option>

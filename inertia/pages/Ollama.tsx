@@ -1,17 +1,28 @@
 import { Head, router, useForm } from '@inertiajs/react';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import MarkdownRender from '~/components/MarkdownRender';
 import { cn } from '~/lib/utils';
 
 export default function Ollama({
     messages,
+    model,
 }: {
     messages: {
         role: 'user' | 'assistant';
         content: string;
     }[];
+    model: string;
 }) {
-    const { data, setData, post, reset, processing } = useForm({ message: '' });
+    const { data, setData, post, reset, processing } = useForm({ message: '', model });
+    const lastMsgRef = useRef<HTMLDivElement>(null);
+    const textAreaRef = useRef<HTMLTextAreaElement>(null);
+
+    useEffect(() => {
+        if (!lastMsgRef.current || !textAreaRef.current) return;
+        lastMsgRef.current.scrollIntoView({ behavior: 'smooth' });
+        textAreaRef.current?.focus();
+    }, [messages]);
+    console.log(data);
 
     return (
         <>
@@ -33,21 +44,34 @@ export default function Ollama({
                                 </div>
                             </div>
                         ))}
+                        <div ref={lastMsgRef} />
                     </div>
-                    <textarea
-                        value={data.message || ''}
-                        onChange={(e) => setData('message', e.target.value)}
-                        onKeyDown={(e) => {
-                            if (e.key === 'Enter' && !e.shiftKey) {
-                                e.preventDefault();
-                                post('/message');
-                                reset();
-                            }
-                        }}
-                        className="rounded-xl border p-2 w-full disabled:opacity-50"
-                        placeholder="Type your message here..."
-                        disabled={!!processing}
-                    />
+                    <label
+                        className={cn('flex border rounded-xl items-start p-2', {
+                            'opacity-50 pointer-events-none': !!processing,
+                        })}
+                    >
+                        <textarea
+                            ref={textAreaRef}
+                            value={data.message || ''}
+                            onChange={(e) => setData('message', e.target.value)}
+                            onKeyDown={(e) => {
+                                if (e.key === 'Enter' && !e.shiftKey) {
+                                    e.preventDefault();
+                                    post('/message');
+                                    reset();
+                                }
+                            }}
+                            className="flex-1 outline-none w-full field-sizing-content min-h-12 resize-none"
+                            placeholder="Type your message here..."
+                            disabled={!!processing}
+                        />
+                        <select className="border rounded-lg p-2" value={data.model} onChange={(e) => setData('model', e.target.value)}>
+                            <option value="gemma:2b">gemma:2b</option>
+                            <option value="gemma3">gemma3</option>
+                            <option value="gpt-oss:120b-cloud">gpt-oss:120b-cloud</option>
+                        </select>
+                    </label>
                 </div>
             </section>
         </>

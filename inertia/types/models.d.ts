@@ -1,3 +1,12 @@
+import ApiUser from '#models/api_user';
+import User from '#models/user';
+
+export type UserT = Pick<User, 'photo' | 'id' | 'fullName' | 'email' | 'password' | 'photoUrl'>;
+export type ApiUserT = Pick<
+    ApiUser,
+    'id' | 'logo' | 'name' | 'key' | 'domain' | 'origins' | 'emails' | 'isAdmin' | 'logoUrl' | 'originsList' | 'emailsList'
+>;
+
 export type InfosT = {
     id: number;
     label: string;
@@ -8,18 +17,10 @@ export type InfosT = {
 };
 
 export type InfoT = {
-    logo: string;
     favicon: string;
-    pet: string;
+    logo: string;
     name: string;
-    founder: string;
-    founded: string;
     phone: string;
     email: string;
     address: string;
-    license_number: string;
-    google_place_id: string;
-    map_iframe_src: string;
-    lbsupp_api_url?: string;
-    lbsupp_api_key?: string;
 };

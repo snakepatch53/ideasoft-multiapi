@@ -1,3 +1,4 @@
+import Link from '@/components/Link';
 import { motion } from 'framer-motion';
 import { ArrowRight, Bot, CheckCircle, Clock, Code, Globe, Mail, Shield, Smartphone, Star, Users, Zap } from 'lucide-react';
 import LandingLayout from '~/layouts/LandingLayout';
@@ -93,10 +94,10 @@ export default function Home() {
                 <header className="fixed top-0 z-50 w-full border-b border-white/10 bg-black/20 backdrop-blur-lg">
                     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                         <div className="flex items-center justify-between py-4">
-                            <div className="flex items-center space-x-2">
+                            <Link route="landing.home" className="flex items-center space-x-2">
                                 <img src={asset('info/logo.webp')} alt="Logo" className="h-8 w-8" />
                                 <span className="text-xl font-bold text-white">MultiAPI</span>
-                            </div>
+                            </Link>
                             <nav className="hidden space-x-8 md:flex">
                                 <a href="#services" className="text-white/80 transition-colors hover:text-white">
                                     Servicios
@@ -112,7 +113,9 @@ export default function Home() {
                                 </a>
                             </nav>
                             <div className="flex space-x-4">
-                                <button className="text-white/80 transition-colors hover:text-white">Iniciar Sesión</button>
+                                <Link route="dashboard.login" className="flex items-center text-white/80 transition-colors hover:text-white">
+                                    Iniciar Sesión
+                                </Link>
                                 <button className="rounded-lg bg-gradient-to-r from-blue-600 to-cyan-600 px-4 py-2 text-white transition-all hover:from-blue-700 hover:to-cyan-700">
                                     Comenzar Gratis
                                 </button>

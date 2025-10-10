@@ -9,7 +9,7 @@ export default function LandingLayout({ title = '', children }: { title?: string
     return (
         <>
             <Head title={pageTitle}>
-                <link rel="icon" href={asset('info/favicon.webp')} />
+                <link rel="shortcut icon" href={asset('info/favicon.webp')} />
             </Head>
             {children}
         </>

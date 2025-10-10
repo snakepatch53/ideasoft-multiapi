@@ -1,28 +1,34 @@
 import { SidebarGroup, SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
-import { cn, fastTry } from '@/lib/utils';
-import { Link } from '@inertiajs/react';
-import { Info, MessageCircleQuestion } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { LinkRouteParamT } from '@/types';
+import { Info, LucideIcon, MessageCircleQuestion, Users } from 'lucide-react';
 import { useState } from 'react';
+import Link from '../Link';
 
 export function NavMain() {
     return (
         <SidebarGroup className="px-2 py-0">
             <SidebarGroupLabel>Platform</SidebarGroupLabel>
             <SidebarMenu>
-                <NavOption title="Information" href={route('dashboard.home')} icon={Info} />
+                <NavOption title="Information" route="dashboard.home" icon={Info} />
+                <NavOption title="Users" route="dashboard.users" icon={Users} />
+            </SidebarMenu>
+            <SidebarGroupLabel>API</SidebarGroupLabel>
+            <SidebarMenu>
+                <NavOption title="Users" route="dashboard.api_users" icon={Users} />
             </SidebarMenu>
         </SidebarGroup>
     );
 }
-function NavOption({ title, href, icon, description = '' }) {
+function NavOption({ title, route, icon, description = '' }: { title: string; route: LinkRouteParamT; icon: LucideIcon; description?: string }) {
     const [isActiveTooltip, setIsActiveTooltip] = useState(false);
+    const [isActive, setIsActive] = useState(false);
     const Icon = icon;
-    const isActive = fastTry(() => new URL(href).pathname === new URL(window.location.href).pathname);
 
     return (
         <SidebarMenuItem className="relative">
             <SidebarMenuButton asChild isActive={isActive} tooltip={{ children: title }}>
-                <Link href={href} prefetch>
+                <Link route={route} onActive={setIsActive}>
                     <Icon />
                     <span>{title}</span>
                     {description && (

@@ -18,9 +18,8 @@ export default function DashboardLayout({ title = '', breadcrumbs, children, ...
 
     return (
         <>
-            <link rel="shortcut icon" href={info.favicon} type="image/x-icon" />
             <Head title={pageTitle}>
-                <link rel="icon" href={info.favicon} />
+                <link rel="shortcut icon" href={info.favicon} />
             </Head>
             <AppSidebarLayout breadcrumbs={breadcrumbs} {...props}>
                 {children}

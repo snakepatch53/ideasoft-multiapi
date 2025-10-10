@@ -16,9 +16,14 @@
         "strictPropertyInitialization": false,
         "skipLibCheck": true,
         "paths": {
-            "~/*": ["./*"],
-            "@/*": ["./*"]
+            "@/*": ["./*"],
+            "~/*": ["./*"]
+            // "#enums/*": ["../app/enums/*"]
         }
     },
-    "include": ["./**/*.ts", "./**/*.tsx"]
+    "include": [
+        "./**/*.ts",
+        "./**/*.tsx"
+        // "../app/enums/**/*.ts"
+    ]
 }

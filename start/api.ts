@@ -1,7 +1,7 @@
 import router from '@adonisjs/core/services/router';
 import ollama from 'ollama';
 
-const messages = [];
+const messages: { role: string; content: string }[] = [];
 
 router
     .get('/ollama', async function ({ inertia }) {

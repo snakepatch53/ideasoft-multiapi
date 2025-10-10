@@ -1,11 +1,12 @@
 import type { InfoT } from '@/types';
 import { usePage } from '@inertiajs/react';
+import { cn } from '~/lib/utils';
 
-export default function AppLogoIcon(props) {
+export default function AppLogoIcon({ className = '', ...props }) {
     const { info } = usePage<{ info: InfoT }>().props;
 
     return (
-        <img src={info.favicon} alt={'Logo of ' + info.name} {...props} className="object-contain" />
+        <img src={info.favicon} alt={'Logo of ' + info.name} className={cn('object-contain', className)} {...props} />
         // <svg {...props} viewBox="0 0 40 42" xmlns="http://www.w3.org/2000/svg">
         //     <path
         //         fillRule="evenodd"

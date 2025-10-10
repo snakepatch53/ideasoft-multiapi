@@ -85,9 +85,7 @@ const plans = [
     },
 ];
 
-export default function Home({ test }) {
-    console.log(test);
-
+export default function Home() {
     return (
         <LandingLayout>
             <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900">

@@ -9,6 +9,6 @@ export const iaValidator = vine.compile(
             })
         ),
         // 'tinyllama' | 'gemma:2b' | 'gemma3' | 'gpt-oss:120b-cloud'
-        model: vine.enum(['tinyllama', 'gpt-oss:120b-cloud']).optional(),
+        model: vine.enum(['tinyllama', 'gemma:2b', 'gemma3', 'gpt-oss:120b-cloud']).optional(),
     })
 );

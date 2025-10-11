@@ -1,8 +1,8 @@
 import Link from '@/components/Link';
+import LandingLayout from '@/layouts/LandingLayout';
+import { asset, cn } from '@/lib/utils';
 import { motion } from 'framer-motion';
 import { ArrowRight, Bot, CheckCircle, Clock, Code, Globe, Mail, Shield, Smartphone, Star, Users, Zap } from 'lucide-react';
-import LandingLayout from '~/layouts/LandingLayout';
-import { asset } from '~/lib/utils';
 
 const services = [
     {
@@ -102,9 +102,7 @@ export default function Home() {
                                 <a href="#services" className="text-white/80 transition-colors hover:text-white">
                                     Servicios
                                 </a>
-                                <a href="#features" className="text-white/80 transition-colors hover:text-white">
-                                    Características
-                                </a>
+                                <a className="text-white/80 transition-colors hover:text-white">Características</a>
                                 <a href="#pricing" className="text-white/80 transition-colors hover:text-white">
                                     Precios
                                 </a>
@@ -116,9 +114,12 @@ export default function Home() {
                                 <Link route="dashboard.login" className="flex items-center text-white/80 transition-colors hover:text-white">
                                     Iniciar Sesión
                                 </Link>
-                                <button className="rounded-lg bg-gradient-to-r from-blue-600 to-cyan-600 px-4 py-2 text-white transition-all hover:from-blue-700 hover:to-cyan-700">
+                                <Link
+                                    route="dashboard.login"
+                                    className="rounded-lg bg-gradient-to-r from-blue-600 to-cyan-600 px-4 py-2 text-white transition-all hover:from-blue-700 hover:to-cyan-700"
+                                >
                                     Comenzar Gratis
-                                </button>
+                                </Link>
                             </div>
                         </div>
                     </div>
@@ -136,9 +137,12 @@ export default function Home() {
                                 límites.
                             </p>
                             <div className="flex flex-col justify-center gap-4 sm:flex-row">
-                                <button className="flex transform items-center justify-center rounded-lg bg-gradient-to-r from-blue-600 to-cyan-600 px-8 py-4 text-lg font-semibold text-white transition-all hover:scale-105 hover:from-blue-700 hover:to-cyan-700">
+                                <Link
+                                    href="dashboard.home"
+                                    className="flex transform items-center justify-center rounded-lg bg-gradient-to-r from-blue-600 to-cyan-600 px-8 py-4 text-lg font-semibold text-white transition-all hover:scale-105 hover:from-blue-700 hover:to-cyan-700"
+                                >
                                     Comenzar Gratis <ArrowRight className="ml-2 h-5 w-5" />
-                                </button>
+                                </Link>
                                 <button className="rounded-lg border border-white/30 px-8 py-4 text-lg font-semibold text-white transition-all hover:bg-white/10">
                                     Ver Documentación
                                 </button>
@@ -244,9 +248,9 @@ export default function Home() {
                                     initial={{ opacity: 0, y: 20 }}
                                     whileInView={{ opacity: 1, y: 0 }}
                                     transition={{ duration: 0.8, delay: index * 0.1 }}
-                                    className={`relative rounded-2xl border bg-white/5 p-8 backdrop-blur-lg ${
-                                        plan.popular ? 'border-purple-500 ring-2 ring-purple-500/20' : 'border-white/10'
-                                    }`}
+                                    className={cn('relative rounded-2xl border border-white/10 bg-white/5 p-8 backdrop-blur-lg', {
+                                        'border-c1 ring-c1/20 ring-2': plan.popular,
+                                    })}
                                 >
                                     {plan.popular && (
                                         <div className="absolute -top-4 left-1/2 -translate-x-1/2 transform">
@@ -272,11 +276,11 @@ export default function Home() {
                                         ))}
                                     </ul>
                                     <button
-                                        className={`w-full rounded-lg py-3 font-semibold transition-all ${
-                                            plan.popular
-                                                ? 'bg-gradient-to-r from-blue-600 to-cyan-600 text-white hover:from-blue-700 hover:to-cyan-700'
-                                                : 'border border-white/30 text-white hover:bg-white/10'
-                                        }`}
+                                        className={cn('w-full rounded-lg py-3 font-semibold transition-all', {
+                                            'bg-gradient-to-r from-blue-600 to-cyan-600 text-white hover:from-blue-700 hover:to-cyan-700':
+                                                plan.popular,
+                                            'border border-white/30 text-white hover:bg-white/10': !plan.popular,
+                                        })}
                                     >
                                         {plan.price === 'Custom' ? 'Contactar Ventas' : 'Comenzar Ahora'}
                                     </button>
@@ -294,9 +298,12 @@ export default function Home() {
                                 Únete a miles de desarrolladores que ya están construyendo el futuro con nuestras APIs
                             </p>
                             <div className="flex flex-col justify-center gap-4 sm:flex-row">
-                                <button className="transform rounded-lg bg-white px-8 py-4 text-lg font-semibold text-blue-600 transition-all hover:scale-105 hover:bg-gray-100">
+                                <Link
+                                    route="dashboard.home"
+                                    className="flex transform items-center rounded-lg bg-white px-8 py-4 text-lg font-semibold text-blue-600 transition-all hover:scale-105 hover:bg-gray-100"
+                                >
                                     Empezar Gratis
-                                </button>
+                                </Link>
                                 <button className="rounded-lg border-2 border-white px-8 py-4 text-lg font-semibold text-white transition-all hover:bg-white/10">
                                     Hablar con Ventas
                                 </button>

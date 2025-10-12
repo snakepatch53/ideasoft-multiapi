@@ -11,11 +11,11 @@ export default class UsersController {
         const { email, password } = await loginValidator.validate(request.all());
         const user = await User.findBy('email', email);
         if (!user) {
-            session.flashErrors({ email: ['These credentials do not match our records.'] });
+            session.flashErrors({ email: ['El usuario no existe.'] });
             return response.redirect().back();
         }
         if (!(await hash.verify(user.password, password))) {
-            session.flashErrors({ email: ['These credentials do not match our records.'] });
+            session.flashErrors({ email: ['Las credenciales no coinciden con nuestros registros.'] });
             return response.redirect().back();
         }
         await auth.use('web').login(user);

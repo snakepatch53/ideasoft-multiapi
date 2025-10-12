@@ -1,12 +1,12 @@
-import { DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator } from '@/components/ui/dropdown-menu';
-import { type User } from '@/types';
+import { DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator } from '@/components/ui/dropdown-menu';
+import type { UserT } from '@/types';
 import { Link } from '@inertiajs/react';
-import { LogOut, Settings } from 'lucide-react';
+import { LogOut } from 'lucide-react';
 import { useMobileNavigation } from '~/hooks/useMobileNavigation';
 import { UserInfo } from './UserInfo';
 
 interface UserMenuContentProps {
-    user: User;
+    user: UserT;
 }
 
 export function UserMenuContent({ user }: UserMenuContentProps) {
@@ -19,12 +19,12 @@ export function UserMenuContent({ user }: UserMenuContentProps) {
                     <UserInfo user={user} showEmail={true} />
                 </div>
             </DropdownMenuLabel>
-            <DropdownMenuSeparator />
+            {/* <DropdownMenuSeparator />
             <DropdownMenuGroup>
                 <DropdownMenuItem asChild>
                     <Link
                         className="block w-full"
-                        // href={route('profile.edit')}
+                        href={route('profile.edit')}
                         as="button"
                         prefetch
                         onClick={cleanup}
@@ -33,7 +33,7 @@ export function UserMenuContent({ user }: UserMenuContentProps) {
                         Settings
                     </Link>
                 </DropdownMenuItem>
-            </DropdownMenuGroup>
+            </DropdownMenuGroup> */}
             <DropdownMenuSeparator />
             <DropdownMenuItem asChild>
                 <Link className="block w-full" method="post" href={route('dashboard.logout')} as="button" onClick={cleanup}>

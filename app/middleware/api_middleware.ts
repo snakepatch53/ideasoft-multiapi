@@ -13,7 +13,5 @@ export default class ApiMiddleware {
         if (!apiUser) return response.unauthorized({ error: 'Invalid API key' });
         ctx.apiUser = apiUser;
         return await next();
-        // const output = await next();
-        // return output;
     }
 }

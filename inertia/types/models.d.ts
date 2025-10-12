@@ -1,7 +1,7 @@
 import ApiUser from '#models/api_user';
 import User from '#models/user';
 
-export type UserT = Pick<User, 'photo' | 'id' | 'fullName' | 'email' | 'password' | 'photoUrl'>;
+export type UserT = Pick<User, 'photo' | 'id' | 'fullName' | 'email' | 'password' | 'photoUrl' | 'type'>;
 export type ApiUserT = Pick<
     ApiUser,
     'id' | 'logo' | 'name' | 'key' | 'domain' | 'origins' | 'emails' | 'isAdmin' | 'logoUrl' | 'originsList' | 'emailsList'

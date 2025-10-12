@@ -31,20 +31,14 @@ export function AppSidebar() {
                     </SidebarMenuItem>
                 </SidebarMenu>
             </SidebarHeader>
-
             <SidebarContent>
                 <NavMain />
             </SidebarContent>
-
             <SidebarFooter>
                 <AppearanceToggleTab
                     variant="sidebar"
-                    className={cn({
-                        'flex-col': !open,
-                    })}
-                    classButton={cn({
-                        'flex items-center justify-center p-0 py-1': !open,
-                    })}
+                    className={cn({ 'flex-col': !open })}
+                    classButton={cn({ 'flex items-center justify-center p-0 py-1': !open })}
                 />
                 <NavUser />
             </SidebarFooter>

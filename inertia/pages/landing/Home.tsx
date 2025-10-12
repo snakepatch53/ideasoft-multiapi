@@ -138,14 +138,19 @@ export default function Home() {
                             </p>
                             <div className="flex flex-col justify-center gap-4 sm:flex-row">
                                 <Link
-                                    href="dashboard.home"
+                                    route="dashboard.home"
                                     className="flex transform items-center justify-center rounded-lg bg-gradient-to-r from-blue-600 to-cyan-600 px-8 py-4 text-lg font-semibold text-white transition-all hover:scale-105 hover:from-blue-700 hover:to-cyan-700"
                                 >
                                     Comenzar Gratis <ArrowRight className="ml-2 h-5 w-5" />
                                 </Link>
-                                <button className="rounded-lg border border-white/30 px-8 py-4 text-lg font-semibold text-white transition-all hover:bg-white/10">
+                                <a
+                                    href="/docs"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="rounded-lg border border-white/30 px-8 py-4 text-lg font-semibold text-white transition-all hover:bg-white/10"
+                                >
                                     Ver Documentación
-                                </button>
+                                </a>
                             </div>
                         </motion.div>
                     </div>

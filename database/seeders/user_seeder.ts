@@ -5,9 +5,9 @@ export default class extends BaseSeeder {
     async run() {
         User.createMany([
             {
-                fullName: 'Admin',
-                email: 'admin@admin.com',
-                password: 'admin',
+                fullName: 'Harold Hernández',
+                email: 'snakepatch53@gmail.com',
+                password: process.env.USER_PASSWORD,
             },
         ]);
     }

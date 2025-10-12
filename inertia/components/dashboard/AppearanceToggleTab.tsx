@@ -43,18 +43,8 @@ export default function AppearanceToggleTab({
                         classButton
                     )}
                 >
-                    <Icon
-                        className={cn('-ml-1 h-4 w-4', {
-                            'm-0 flex-1': variant === 'sidebar',
-                        })}
-                    />
-                    <span
-                        className={cn('ml-1.5 text-sm', {
-                            hidden: variant === 'sidebar',
-                        })}
-                    >
-                        {label}
-                    </span>
+                    <Icon className={cn('-ml-1 h-4 w-4', { 'm-0 flex-1': variant === 'sidebar' })} />
+                    <span className={cn('ml-1.5 text-sm', { hidden: variant === 'sidebar' })}>{label}</span>
                 </button>
             ))}
         </div>

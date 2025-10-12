@@ -26,6 +26,11 @@ jobs:
                   username: ${{ secrets.SSH_USER }}
                   password: ${{ secrets.SSH_PASS }}
                   script: |
+                      # --- Cargar entorno Node (importante) ---
+                      export NVM_DIR="$HOME/.nvm"
+                      [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+                      export PATH=$PATH:/usr/local/bin:/usr/bin:/bin:/home/ideasoft/.npm-global/bin
+
                       echo "📦 Entrando al servidor..."
                       cd ${{ env.SERVER_DIR }}
 
@@ -47,7 +52,9 @@ jobs:
                       echo "DB_PASSWORD=${{ secrets.DB_PASS }}" >> build/.env
 
                       echo "🧱 Generando key si no existe..."
+                      cd build
                       node ace generate:key
+                      cd ..
 
                       echo "♻️ Reiniciando PM2..."
                       pm2 restart ${{ env.PM2_NAME }} || pm2 start "node build/server.js" --name "${{ env.PM2_NAME }}"

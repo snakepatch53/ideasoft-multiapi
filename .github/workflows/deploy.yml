@@ -48,7 +48,7 @@ jobs:
                       cp .env.example build/.env
                       echo -e "\n" >> build/.env
                       echo "APP_URL=${{ env.APP_DOMAIN }}" >> build/.env
-                      echo "PORT=81" >> build/.env
+                      echo "PORT=8081" >> build/.env
                       echo "DB_DATABASE=${{ secrets.DB_NAME }}" >> build/.env
                       echo "DB_USER=${{ secrets.DB_USER }}" >> build/.env
                       echo "DB_PASSWORD=${{ secrets.DB_PASS }}" >> build/.env

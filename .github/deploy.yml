@@ -1,0 +1,42 @@
+name: Build and Deploy
+on:
+    push:
+        branches:
+            - main
+env:
+    PM2_NAME: 'ideasoft-multiapi'
+    APP_DOMAIN: 'https://api.ideasoft.site'
+    SERVER_DIR: '/home/ideasoft/projects/ideasoft-multiapi'
+
+concurrency:
+    group: deploy
+    cancel-in-progress: false
+
+jobs:
+    deploy:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: 🔐 Deploy via SSH
+              uses: appleboy/ssh-action@v0.1.10
+              with:
+                  host: ${{secrets.SSH_HOST}}
+                  username: ${{secrets.SSH_USER}}
+                  password: ${{secrets.SSH_PASS}}
+                  script: |
+                      cd ${{env.SERVER_DIR}}
+                      git reset --hard
+                      git pull origin
+                      npm install --legacy-peer-deps
+                      npm run build
+
+                      cp .env.example build/.env
+                      echo "APP_URL=${{env.APP_DOMAIN}}" >> build/.env
+                      echo "DB_DATABASE=${{secrets.DB_NAME}}" >> build/.env
+                      echo "DB_USERNAME=${{secrets.DB_USER}}" >> build/.env
+                      echo "DB_PASSWORD='${{secrets.DB_PASS}}'" >> build/.env
+
+                      cd build
+                      node ace generate:key
+
+                      pm2 restart ${{env.PM2_NAME}} || pm2 start "npm start" --name "${{env.PM2_NAME}}"

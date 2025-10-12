@@ -5,24 +5,21 @@ import type { HttpContext } from '@adonisjs/core/http';
 
 export default class DashboardController {
     public async login({ inertia }: HttpContext) {
-        const [, info] = await InfoFormatService.format(null, false);
-        return inertia.render('dashboard/Login', { info });
+        return inertia.render('dashboard/Login');
     }
 
-    public async home({ inertia, auth }: HttpContext) {
+    public async home({ inertia }: HttpContext) {
         const [infos, info] = await InfoFormatService.format(null, false);
-        return inertia.render('dashboard/Home', { infos, info, user: auth.user });
+        return inertia.render('dashboard/Home', { infos, info });
     }
 
-    public async users({ inertia, auth }: HttpContext) {
-        const [infos, info] = await InfoFormatService.format(null, false);
+    public async users({ inertia }: HttpContext) {
         const users = await User.query().orderBy('id', 'asc');
-        return inertia.render('dashboard/Users', { infos, info, users, user: auth.user });
+        return inertia.render('dashboard/Users', { users });
     }
 
-    public async api_users({ inertia, auth }: HttpContext) {
-        const [infos, info] = await InfoFormatService.format(null, false);
+    public async api_users({ inertia }: HttpContext) {
         const apiUsers = await ApiUser.query().orderBy('id', 'asc');
-        return inertia.render('dashboard/ApiUsers', { infos, info, apiUsers, user: auth.user });
+        return inertia.render('dashboard/ApiUsers', { apiUsers });
     }
 }

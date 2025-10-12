@@ -30,6 +30,7 @@ server.use([
     () => import('@adonisjs/vite/vite_middleware'),
     () => import('@adonisjs/inertia/inertia_middleware'),
     () => import('@izzyjs/route/izzy_middleware'),
+    () => import('#middleware/share_inertia_data_middleware'),
 ]);
 
 /**

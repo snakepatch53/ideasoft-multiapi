@@ -4,6 +4,7 @@ import { middleware } from './kernel.js';
 const LandingController = () => import('#controllers/landing_controller');
 
 // router.on('/').renderInertia('landing/Home').as('landing.home');
+router.on('/404').renderInertia('errors/not_found');
 router
     .group(() => {
         router.get('/', [LandingController, 'home']).as('home');

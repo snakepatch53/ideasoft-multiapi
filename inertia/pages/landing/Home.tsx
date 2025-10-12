@@ -97,7 +97,7 @@ export default function Home({ info }: { info: InfoT }) {
                         <div className="flex items-center justify-between py-4">
                             <Link route="landing.home" className="flex items-center space-x-2">
                                 <img src={info.logo} alt="Logo" className="size-8" />
-                                <span className="text-xl font-bold text-white">{info.name}</span>
+                                <span className="text-xl font-bold text-white">{info.name} HOLA</span>
                             </Link>
                             <nav className="hidden space-x-8 md:flex">
                                 <a href="#services" className="text-white/80 transition-colors hover:text-white">

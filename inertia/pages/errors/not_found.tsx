@@ -3,8 +3,18 @@ import LandingLayout from '@/layouts/LandingLayout';
 import { motion } from 'framer-motion';
 import { AlertTriangle, ArrowLeft, Home } from 'lucide-react';
 
-export default function NotFound(props) {
-    console.log(props);
+export default function NotFound({ error = { status: 500 } }) {
+    const formatError = (text?: string) => {
+        return text.split('').map((part, index) =>
+            index !== 0 && index !== text.length - 1 ? (
+                <span key={index} className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
+                    {part}
+                </span>
+            ) : (
+                part
+            )
+        );
+    };
 
     return (
         <LandingLayout>
@@ -21,9 +31,7 @@ export default function NotFound(props) {
                             </div>
                             {/* Error Code */}
                             <div className="mb-6">
-                                <h1 className="text-8xl font-bold text-white md:text-9xl lg:text-[12rem]">
-                                    4<span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">0</span>4
-                                </h1>
+                                <h1 className="text-8xl font-bold text-white md:text-9xl lg:text-[12rem]">{formatError(String(error.status))}</h1>
                             </div>
                             {/* Error Message */}
                             <h2 className="mb-6 text-3xl font-bold text-white md:text-4xl lg:text-5xl">Página No Encontrada</h2>

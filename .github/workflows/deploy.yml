@@ -1,8 +1,10 @@
-name: Build and Deploy
+name: 🚀 Build and Deploy
+
 on:
     push:
         branches:
             - main
+
 env:
     PM2_NAME: 'ideasoft-multiapi'
     APP_DOMAIN: 'https://api.ideasoft.site'
@@ -20,23 +22,32 @@ jobs:
             - name: 🔐 Deploy via SSH
               uses: appleboy/ssh-action@v0.1.10
               with:
-                  host: ${{secrets.SSH_HOST}}
-                  username: ${{secrets.SSH_USER}}
-                  password: ${{secrets.SSH_PASS}}
+                  host: ${{ secrets.SSH_HOST }}
+                  username: ${{ secrets.SSH_USER }}
+                  password: ${{ secrets.SSH_PASS }}
                   script: |
-                      cd ${{env.SERVER_DIR}}
-                      git reset --hard
-                      git pull origin
+                      echo "📦 Entrando al servidor..."
+                      cd ${{ env.SERVER_DIR }}
+
+                      echo "🌀 Actualizando código..."
+                      git fetch origin main
+                      git reset --hard origin/main
+
+                      echo "📦 Instalando dependencias..."
                       npm install --legacy-peer-deps
+
+                      echo "⚙️ Compilando proyecto..."
                       npm run build
 
+                      echo "🧩 Generando archivo .env dentro del build..."
                       cp .env.example build/.env
-                      echo "APP_URL=${{env.APP_DOMAIN}}" >> build/.env
-                      echo "DB_DATABASE=${{secrets.DB_NAME}}" >> build/.env
-                      echo "DB_USERNAME=${{secrets.DB_USER}}" >> build/.env
-                      echo "DB_PASSWORD='${{secrets.DB_PASS}}'" >> build/.env
+                      echo "APP_URL=${{ env.APP_DOMAIN }}" >> build/.env
+                      echo "DB_DATABASE=${{ secrets.DB_NAME }}" >> build/.env
+                      echo "DB_USERNAME=${{ secrets.DB_USER }}" >> build/.env
+                      echo "DB_PASSWORD=${{ secrets.DB_PASS }}" >> build/.env
 
-                      cd build
+                      echo "🧱 Generando key si no existe..."
                       node ace generate:key
 
-                      pm2 restart ${{env.PM2_NAME}} || pm2 start "npm start" --name "${{env.PM2_NAME}}"
+                      echo "♻️ Reiniciando PM2..."
+                      pm2 restart ${{ env.PM2_NAME }} || pm2 start "node build/server.js" --name "${{ env.PM2_NAME }}"

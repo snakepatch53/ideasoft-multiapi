@@ -1,10 +1,10 @@
-import { Head } from '@inertiajs/react';
+import type { InfoT } from '@/types';
+import { Head, usePage } from '@inertiajs/react';
 import { asset } from '~/lib/utils';
 
-const appName = import.meta.env.VITE_APP_NAME;
-
 export default function LandingLayout({ title = '', children }: { title?: string; children: React.ReactNode }) {
-    const pageTitle = title ? `${title} - ${appName}` : appName;
+    const { info } = usePage<{ info: InfoT }>().props;
+    const pageTitle = title ? `${title} - ${info.name}` : info.name;
 
     return (
         <>

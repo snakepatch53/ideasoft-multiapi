@@ -1,6 +1,7 @@
 import Link from '@/components/Link';
 import LandingLayout from '@/layouts/LandingLayout';
 import { asset, cn } from '@/lib/utils';
+import type { InfoT } from '@/types';
 import { motion } from 'framer-motion';
 import { ArrowRight, Bot, CheckCircle, Clock, Code, Globe, Mail, Shield, Smartphone, Star, Users, Zap } from 'lucide-react';
 
@@ -86,7 +87,7 @@ const plans = [
     },
 ];
 
-export default function Home() {
+export default function Home({ info }: { info: InfoT }) {
     return (
         <LandingLayout>
             <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900">
@@ -95,8 +96,8 @@ export default function Home() {
                     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                         <div className="flex items-center justify-between py-4">
                             <Link route="landing.home" className="flex items-center space-x-2">
-                                <img src={asset('info/logo.webp')} alt="Logo" className="h-8 w-8" />
-                                <span className="text-xl font-bold text-white">MultiAPI</span>
+                                <img src={info.logo} alt="Logo" className="size-8" />
+                                <span className="text-xl font-bold text-white">{info.name}</span>
                             </Link>
                             <nav className="hidden space-x-8 md:flex">
                                 <a href="#services" className="text-white/80 transition-colors hover:text-white">

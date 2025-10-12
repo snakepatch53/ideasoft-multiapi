@@ -1,3 +1,4 @@
+import User from '#models/user';
 import type { Authenticators } from '@adonisjs/auth/types';
 import type { HttpContext } from '@adonisjs/core/http';
 import router from '@adonisjs/core/services/router';
@@ -13,16 +14,9 @@ export default class AuthMiddleware {
      */
     redirectTo = router.makeUrl('dashboard.login');
 
-    async handle(
-        ctx: HttpContext,
-        next: NextFn,
-        options: {
-            guards?: (keyof Authenticators)[];
-        } = {}
-    ) {
-        await ctx.auth.authenticateUsing(options.guards, {
-            loginRoute: this.redirectTo,
-        });
+    async handle({ auth, inertia }: HttpContext, next: NextFn, options: { guards?: (keyof Authenticators)[] } = {}) {
+        await auth.authenticateUsing(options.guards, { loginRoute: this.redirectTo });
+        inertia.share({ user: auth.user as User });
         return next();
     }
 }

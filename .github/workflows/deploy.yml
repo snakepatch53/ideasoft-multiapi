@@ -41,8 +41,14 @@ jobs:
                       echo "📦 Instalando dependencias..."
                       npm install --legacy-peer-deps
 
+                      echo "📦 Respaldando carpeta storage..."
+                      mv build/public/storage storage_backup || true
+
                       echo "⚙️ Compilando proyecto..."
                       npm run build
+
+                      echo "📦 Restaurando carpeta storage..."
+                      mv storage_backup build/public/storage || true
 
                       echo "🧩 Generando archivo .env dentro del build..."
                       cp .env.example build/.env

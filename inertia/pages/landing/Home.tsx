@@ -103,7 +103,9 @@ export default function Home({ info }: { info: InfoT }) {
                                 <a href="#services" className="text-white/80 transition-colors hover:text-white">
                                     Servicios
                                 </a>
-                                <a className="text-white/80 transition-colors hover:text-white">Características</a>
+                                <a href="#features" className="text-white/80 transition-colors hover:text-white">
+                                    Características
+                                </a>
                                 <a href="#pricing" className="text-white/80 transition-colors hover:text-white">
                                     Precios
                                 </a>

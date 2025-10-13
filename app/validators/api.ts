@@ -8,7 +8,7 @@ export const iaValidator = vine.compile(
                 content: vine.string(),
             })
         ),
-        // 'tinyllama' | 'gemma:2b' | 'gpt-oss:120b-cloud'
-        model: vine.enum(['tinyllama', 'gemma:2b', 'gpt-oss:120b-cloud']).optional(),
+        // 'tinyllama' | 'gemma:2b' | 'Phi3:3.8B' | 'gpt-oss:120b-cloud'
+        model: vine.enum(['tinyllama', 'gemma:2b', 'Phi3:3.8B', 'gpt-oss:120b-cloud']).optional(),
     })
 );

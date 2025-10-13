@@ -36,7 +36,7 @@ export default class ApiController {
      *               model:
      *                 type: string
      *                 description: Modelo a usar
-     *                 enum: ['tinyllama', 'gemma:2b', 'gpt-oss:120b-cloud']
+     *                 enum: ['tinyllama', 'gemma:2b', 'Phi3:3.8B', 'gpt-oss:120b-cloud']
      *                 example: 'gpt-oss:120b-cloud'
      *     responses:
      *       200:

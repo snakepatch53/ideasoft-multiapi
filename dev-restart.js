@@ -41,32 +41,24 @@ const log = {
     clean: (message) => console.log(`${colors.gray}[${getTime()}]${colors.reset} ${colors.blue}🧹${colors.reset} ${message}`),
 };
 
-const debugLog = (message) => {
-    if (DEBUG) console.log(`${colors.dim}[DEBUG] ${message}${colors.reset}`);
-};
+const debugLog = (message) => DEBUG && console.log(`${colors.dim}[DEBUG] ${message}${colors.reset}`);
 
 // Función optimizada para matar procesos rápidamente
 async function killServerPort() {
     log.clean(`Limpiando puerto ${colors.yellow}${PORT}${colors.reset}...`);
-
     // Ejecutar métodos en paralelo para máxima velocidad
     await Promise.all([
         // Método 1: kill-port
         new Promise((resolve) => {
-            const killPort = spawn('npx', ['kill-port', PORT.toString()], {
-                stdio: 'pipe',
-                shell: true,
-            });
+            const killPort = spawn('npx', ['kill-port', PORT.toString()], { stdio: 'pipe', shell: true });
             killPort.on('close', resolve);
             killPort.on('error', resolve);
             setTimeout(resolve, 1500); // Timeout de seguridad
         }),
-
         // Método 2: Buscar PID y matar con taskkill
         new Promise((resolve) => {
             exec(`netstat -ano | findstr :${PORT} | findstr LISTENING`, (error, stdout) => {
                 if (error || !stdout.trim()) return resolve();
-
                 try {
                     const lines = stdout.trim().split('\n');
                     const pids = lines
@@ -75,16 +67,13 @@ async function killServerPort() {
                             return parts[parts.length - 1];
                         })
                         .filter((pid) => pid && !isNaN(pid));
-
                     // Matar todos los PIDs encontrados en paralelo
                     if (pids.length > 0) {
                         debugLog(`Terminando ${pids.length} proceso(s): ${pids.join(', ')}`);
                         Promise.all(pids.map((pid) => new Promise((r) => exec(`taskkill /F /T /PID ${pid}`, { shell: true }, () => r())))).then(
                             resolve
                         );
-                    } else {
-                        resolve();
-                    }
+                    } else resolve();
                 } catch (e) {
                     resolve();
                 }
@@ -92,78 +81,41 @@ async function killServerPort() {
             setTimeout(resolve, 1500); // Timeout de seguridad
         }),
     ]);
-
     // Espera mínima para que el sistema libere el puerto
     await new Promise((resolve) => setTimeout(resolve, 100));
-
     debugLog(`Puerto ${PORT} limpio`);
     return true;
 }
 
 async function startServer() {
     if (isShuttingDown) return;
-
     // Limpiar puerto
     await killServerPort();
-
     log.server(`Iniciando servidor Adonis en puerto ${colors.yellow}${PORT}${colors.reset}...`);
-
     try {
-        const env = {
-            ...process.env,
-            NODE_NO_CLEAR: '1',
-            FORCE_COLOR: '1',
-            NO_CLEAR: '1',
-            ADONIS_NO_CLEAR: '1',
-        };
-
-        currentServer = spawn('node', ['ace', 'serve', '--hmr', '--no-clear'], {
-            stdio: ['inherit', 'pipe', 'pipe'],
-            detached: false,
-            env: env,
-        });
-
+        const env = { ...process.env, NODE_NO_CLEAR: '1', FORCE_COLOR: '1', NO_CLEAR: '1', ADONIS_NO_CLEAR: '1' };
+        currentServer = spawn('node', ['ace', 'serve', '--hmr', '--no-clear'], { stdio: ['inherit', 'pipe', 'pipe'], detached: false, env: env });
         currentServer.stdout.on('data', (data) => {
             const output = data.toString();
             const filteredOutput = output.replace(/\u001Bc/g, '').replace(/\u001B\[2J\u001B\[0;0H/g, '');
             process.stdout.write(filteredOutput);
-
-            if (output.includes('starting HTTP server') || output.includes('server started')) {
+            if (output.includes('starting HTTP server') || output.includes('server started'))
                 log.success(`Servidor listo en ${colors.green}http://localhost:${PORT}${colors.reset}`);
-            }
         });
-
-        currentServer.stderr.on('data', (data) => {
-            process.stderr.write(data);
-        });
-
+        currentServer.stderr.on('data', (data) => process.stderr.write(data));
         const now = Date.now();
-        if (now - lastRestartTime < 60000) {
-            restartCount++;
-        } else {
-            restartCount = 1;
-        }
+        if (now - lastRestartTime < 60000) restartCount++;
+        else restartCount = 1;
         lastRestartTime = now;
-
         log.info(`PID: ${colors.cyan}${currentServer.pid}${colors.reset} | Reinicio: ${colors.yellow}#${restartCount}${colors.reset}`);
-
         currentServer.on('exit', (code, signal) => {
-            if (isShuttingDown) {
-                log.info('Servidor cerrado correctamente.');
-                return;
-            }
-
+            if (isShuttingDown) return log.info('Servidor cerrado correctamente.');
             // Salto de línea para separar intentos
             console.log('\n');
-
-            if (code !== 0) {
-                log.warning(`Servidor terminado con código ${colors.red}${code}${colors.reset}. Reiniciando...`);
-            } else if (signal) {
-                log.warning(`Servidor terminado por señal ${colors.red}${signal}${colors.reset}. Reiniciando...`);
-            }
+            if (code !== 0) log.warning(`Servidor terminado con código ${colors.red}${code}${colors.reset}. Reiniciando...`);
+            else if (signal) log.warning(`Servidor terminado por señal ${colors.red}${signal}${colors.reset}. Reiniciando...`);
             setTimeout(startServer, 200);
         });
-
         currentServer.on('error', (err) => {
             log.error(`Error: ${err.message}`);
             if (!isShuttingDown) setTimeout(startServer, 200);
@@ -176,17 +128,13 @@ async function startServer() {
 
 async function shutdown() {
     if (isShuttingDown) return;
-
     isShuttingDown = true;
     console.log(`\n${colors.yellow}⏹${colors.reset}  Cerrando servidor...`);
-
     try {
         if (currentServer && !currentServer.killed) {
             log.info(`Terminando proceso ${colors.cyan}${currentServer.pid}${colors.reset}...`);
             currentServer.kill('SIGTERM');
-
             await new Promise((resolve) => setTimeout(resolve, 500));
-
             if (!currentServer.killed) {
                 log.warning('Forzando cierre del servidor...');
                 currentServer.kill('SIGKILL');
@@ -195,7 +143,6 @@ async function shutdown() {
     } catch (error) {
         log.error(`Error al cerrar: ${error.message}`);
     }
-
     await killServerPort();
     log.success('Servidor cerrado correctamente. ¡Hasta pronto!');
     process.exit(0);

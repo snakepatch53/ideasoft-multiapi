@@ -39,13 +39,16 @@ jobs:
                       git reset --hard origin/main
 
                       echo "📦 Instalando dependencias..."
-                      npm install --legacy-peer-deps
+                      # npm install --legacy-peer-deps
+                      corepack enable
+                      pnpm install --frozen-lockfile
 
                       echo "📦 Respaldando carpeta storage..."
                       mv build/public/storage storage_backup || true
 
                       echo "⚙️ Compilando proyecto..."
-                      npm run build
+                      # npm run build
+                      pnpm run build
 
                       echo "📦 Restaurando carpeta storage..."
                       mv storage_backup build/public/storage || true

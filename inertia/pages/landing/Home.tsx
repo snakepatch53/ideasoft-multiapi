@@ -91,7 +91,6 @@ export default function Home({ info }: { info: InfoT }) {
     return (
         <LandingLayout>
             {/* Header */}
-
             {/* Hero Section */}
             <section className="px-4 pt-32 pb-20 sm:px-6 lg:px-8">
                 <div className="mx-auto max-w-7xl text-center">

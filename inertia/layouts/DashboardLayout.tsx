@@ -4,8 +4,6 @@ import { type ReactNode } from 'react';
 import { ToastContainer } from 'react-toastify';
 import AppSidebarLayout from './AppSidebarLayout';
 
-const appName = import.meta.env.VITE_APP_NAME;
-
 interface AppLayoutProps {
     title?: string;
     breadcrumbs?: BreadcrumbItem[];
@@ -14,7 +12,7 @@ interface AppLayoutProps {
 
 export default function DashboardLayout({ title = '', breadcrumbs, children, ...props }: AppLayoutProps) {
     const { info } = usePage<{ info: InfoT }>().props;
-    const pageTitle = title ? `${title} - ${appName}` : appName;
+    const pageTitle = title ? `${title} - ${info.name}` : info.name;
 
     return (
         <>

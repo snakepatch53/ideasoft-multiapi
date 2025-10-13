@@ -27,6 +27,8 @@ export default class ApiController {
      *                   properties:
      *                     role:
      *                       type: string
+     *                       description: Rol del mensaje
+     *                       enum: ['system', 'user', 'assistant']
      *                       example: user
      *                     content:
      *                       type: string

@@ -20,6 +20,14 @@ export default class extends BaseSeeder {
                 origins: 'https://lbs.bz\nhttps://lbsupport.com\nhttp://localhost:3333',
                 emails: 'latinosupp@gmail.com',
             },
+            {
+                logo: 'moronanet.webp',
+                name: 'Moronanet',
+                key: '5JRpz6KtUgnCzRWRNUX4lcWw8jdXWL7g',
+                domain: 'https://moronanet.com',
+                origins: 'https://moronanet.com\nhttp://localhost:3333',
+                emails: 'info@moronanet.com',
+            },
         ]);
     }
 }
